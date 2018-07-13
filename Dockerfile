@@ -21,7 +21,7 @@ RUN \
     python-dateutil \
     qtfaststart && \
 
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
 
 # cleanup
   rm -rf \
