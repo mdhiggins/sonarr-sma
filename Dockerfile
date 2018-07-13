@@ -2,8 +2,8 @@ FROM linuxserver/sonarr
 MAINTAINER mdhiggins
 
 # set environment variables
-ENV PUID 1001
-ENV PGID 1001
+ENV PUID abc
+ENV PGID abc
 
 # get python3 and git, and install python libraries
 RUN \
