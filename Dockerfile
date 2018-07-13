@@ -2,7 +2,7 @@ FROM linuxserver/sonarr
 
 # get python3 and git, and install python libraries
 RUN \
-  apt-get update \
+  apt-get update && \
   apt-get install -y \
     git \
     python3 && \
