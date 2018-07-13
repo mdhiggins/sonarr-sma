@@ -1,4 +1,9 @@
 FROM linuxserver/sonarr
+MAINTAINER mdhiggins
+
+# set environment variables
+ENV PUID 1001
+ENV PGID 1001
 
 # get python3 and git, and install python libraries
 RUN \
@@ -7,6 +12,8 @@ RUN \
     git \
     python3 \
     python3-pip && \
+
+# install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
   mkdir /usr/local/bin/sma && \
@@ -21,7 +28,10 @@ RUN \
     python-dateutil \
     qtfaststart && \
 
+# download repo
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
+
+# create logging directory
   install -d -o ${PUID} -g ${PGID} -m 0755 /var/log/sickbeard_mp4_automator && \
 
 # cleanup
