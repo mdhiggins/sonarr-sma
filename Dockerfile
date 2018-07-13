@@ -22,8 +22,7 @@ RUN \
     qtfaststart && \
 
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
-  mkdir /var/log/sickbeard_mp4_automator && \
-  chown ${PUID}:${PGID} /var/log/sickbeard_mp4_automator && \
+  install -d -o ${PUID} -g ${PGID} -m 0755 /var/log/sickbeard_mp4_automator && \
 
 # cleanup
   rm -rf \
