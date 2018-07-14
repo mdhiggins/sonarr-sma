@@ -6,6 +6,7 @@ RUN \
   apt-get update && \
   apt-get install -y \
     git \
+    wget \
     python3 \
     python3-pip && \
 
@@ -32,13 +33,19 @@ RUN \
   chgrp users /var/log/sickbeard_mp4_automator && \
   chmod g+w /var/log/sickbeard_mp4_automator && \
 
+# ffmpeg
+  wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
+  mkdir /usr/local/bin/ffmpeg && \
+  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin/ffmpeg --strip-components 1 && \
+  chgrp -R users /usr/local/bin/ffmpeg && \
+  chmod g+x /usr/local/bin/ffmpeg/ffmpeg && \
+  chmod g+x /usr/local/bin/ffmpeg/ffprobe && \
+
 # cleanup
   rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
 
-VOLUME /ffmpeg
-
 RUN \
-  ln -s /config/autoProcess.ini /usr/local/bin/sma/sickbeard_mp4_automator
+  ln -s /config/sma/autoProcess.ini /usr/local/bin/sma/sickbeard_mp4_automator
