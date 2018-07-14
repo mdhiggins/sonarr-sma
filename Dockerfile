@@ -29,7 +29,8 @@ RUN \
 
 # create logging directory
   mkdir /var/log/sickbeard_mp4_automator && \
-  chown abc:users /var/log/sickbeard_mp4_automator && \
+  chgrp users /var/log/sickbeard_mp4_automator && \
+  chmod g+w /var/log/sickbeard_mp4_automator && \
 
 # cleanup
   rm -rf \
