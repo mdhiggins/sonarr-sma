@@ -1,10 +1,6 @@
 FROM linuxserver/sonarr
 MAINTAINER mdhiggins
 
-# set environment variables
-ENV PUID abc
-ENV PGID abc
-
 # get python3 and git, and install python libraries
 RUN \
   apt-get update && \
@@ -32,7 +28,8 @@ RUN \
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
 
 # create logging directory
-  install -d -o ${PUID} -g ${PGID} -m 0755 /var/log/sickbeard_mp4_automator && \
+  mkdir /var/log/sickbeard_mp4_automator && \
+  chown abc:abc /var/log/sickbeard_mp4_automator && \
 
 # cleanup
   rm -rf \
