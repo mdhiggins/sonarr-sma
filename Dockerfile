@@ -46,6 +46,3 @@ RUN \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
-
-RUN \
-  ln -s /config/sma/autoProcess.ini /usr/local/bin/sma/sickbeard_mp4_automator
