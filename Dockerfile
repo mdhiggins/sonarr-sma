@@ -30,8 +30,9 @@ RUN \
 
 # create logging directory
   mkdir /var/log/sickbeard_mp4_automator && \
-  chgrp users /var/log/sickbeard_mp4_automator && \
-  chmod g+w /var/log/sickbeard_mp4_automator && \
+  touch /var/log/sickbeard_mp4_automator/index.log && \
+  chgrp -R users /var/log/sickbeard_mp4_automator && \
+  chmod -R g+w /var/log/sickbeard_mp4_automator && \
 
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
