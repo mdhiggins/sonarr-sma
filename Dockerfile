@@ -19,6 +19,7 @@ RUN \
     requests[security] \
     requests-cache \
     babelfish \
+    tmdbsimple \
     'guessit<2' \
     'subliminal<2' \
     'stevedore==1.19.1' \
