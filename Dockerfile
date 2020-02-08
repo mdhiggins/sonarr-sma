@@ -20,9 +20,9 @@ RUN \
     requests-cache \
     babelfish \
     tmdbsimple \
-    'guessit<2' \
-    'subliminal<2' \
-    'stevedore==1.19.1' \
+    guessit \
+    subliminal \
+    stevedore \
     python-dateutil \
     qtfaststart && \
 
