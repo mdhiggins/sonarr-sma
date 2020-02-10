@@ -24,6 +24,7 @@ RUN \
     subliminal \
     stevedore \
     python-dateutil \
+    setuptools \
     qtfaststart && \
 # download repo
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
