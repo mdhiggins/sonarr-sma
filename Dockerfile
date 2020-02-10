@@ -20,6 +20,7 @@ RUN \
     babelfish \
     tmdbsimple \
     guessit \
+    mutagen \
     subliminal \
     stevedore \
     python-dateutil \
