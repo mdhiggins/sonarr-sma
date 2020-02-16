@@ -4,8 +4,7 @@ FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
-#COPY --from=jrffmpeg /usr/local/ /usr/local/
-COPY --from=jrffmpeg / /
+COPY --from=jrffmpeg /usr/local/ /usr/local/
 
 # Variables
 ENV FFMPEG=/usr/local/bin/ffmpeg
