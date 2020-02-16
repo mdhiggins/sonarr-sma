@@ -1,4 +1,4 @@
-ARG ffmpeg_tag=4.1-alpine
+ARG ffmpeg_tag=4.2-scratch
 FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
