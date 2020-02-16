@@ -1,23 +1,19 @@
 #!/usr/bin/env python
 
-import sys
 import os
 import configparser
 import xml.etree.ElementTree as ET
 
+xml = "/config/config.xml"
+autoProcess = "/usr/local/bin/sma/sickbeard_mp4_automator/autoProcess.ini"
 sections = {"7878": "Radarr",
             "8989": "Sonarr"}
 
 
 def main():
-    if len(sys.argv) < 5:
-        print("Not enough arguments: %d" % len(sys.argv))
-        print(sys.argv)
-        sys.exit()
-
-    xml = sys.argv[1].strip()
     if not os.path.isfile(xml):
         print("No Sonarr/Radarr config file found")
+        return
 
     tree = ET.parse(xml)
     root = tree.getroot()
@@ -29,25 +25,14 @@ def main():
     ssl = os.environ.get("SSL")
     webroot = os.environ.get("WEBROOT")
 
-    autoProcess = sys.argv[2].strip()
     if not os.path.isfile(autoProcess):
         print("autoProcess.ini does not exist")
-        sys.exit()
-
-    option = sys.argv[3].strip()
-    value = sys.argv[4].strip()
+        return
 
     safeConfigParser = configparser.SafeConfigParser()
     safeConfigParser.read(autoProcess)
-    if not safeConfigParser.has_section(section):
-        print("Section does not exist in autoProcess.ini")
-        sys.exit()
 
-    if not safeConfigParser.has_option(section, option):
-        print("Option does not exist in autoProcess.ini")
-        sys.exit()
-
-    safeConfigParser.set(section, option, value)
+    safeConfigParser.set(section, "apikey", apikey)
     if ip:
         safeConfigParser.set(section, "host", ip)
     if ssl:

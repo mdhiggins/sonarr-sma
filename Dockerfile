@@ -1,14 +1,11 @@
 ARG ffmpeg_tag=4.2-ubuntu
-FROM jrottenberg/ffmpeg:${ffmpeg_tag} as jrffmpeg
+FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
-COPY --from=jrffmpeg /usr/local/ /usr/local/
+COPY --from=ffmpeg /usr/local/ /usr/local/
 
-# Variables
-ENV FFMPEG=/usr/local/bin/ffmpeg
-ENV FFPROBE=/usrlocal/bin/ffprobe
 # get python3 and git, and install python libraries
 RUN \
   apt-get update && \
@@ -48,8 +45,9 @@ RUN \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
-ADD update.py /usr/local/bin/sma/update.py
 
+# update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
+ADD update.py /usr/local/bin/sma/update.py
 RUN /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py
 
 EXPOSE 8989
