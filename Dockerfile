@@ -1,5 +1,5 @@
-ARG ffmpeg_tag=4.2-alpine
-FROM jrottenberg/ffmpeg as jrffmpeg
+ARG ffmpeg_tag=4.2-ubuntu
+FROM jrottenberg/ffmpeg:${ffmpeg_tag} as jrffmpeg
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
