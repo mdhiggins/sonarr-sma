@@ -38,7 +38,7 @@ RUN \
   chmod -R g+w /var/log/sickbeard_mp4_automator && \
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
-  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin/ffmpeg --strip-components 1 && \
+  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
   chgrp users /usr/local/bin/ffmpeg && \
   chgrp users /usr/local/bin/ffprobe && \
   chmod g+x /usr/local/bin/ffmpeg && \
