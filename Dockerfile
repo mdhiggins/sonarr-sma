@@ -1,6 +1,9 @@
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
+# Variables
+ENV FFMPEG=/usr/local/bin/ffmpeg
+ENV FFPROBE=/usrlocal/bin/ffprobe
 # get python3 and git, and install python libraries
 RUN \
   apt-get update && \
@@ -29,17 +32,17 @@ RUN \
 # download repo
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
 # create logging directory
-  mkdir /var/log/sickbeard_mp4_automator && \
+  mkdir -p /var/log/sickbeard_mp4_automator && \
   touch /var/log/sickbeard_mp4_automator/index.log && \
   chgrp -R users /var/log/sickbeard_mp4_automator && \
   chmod -R g+w /var/log/sickbeard_mp4_automator && \
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
-  mkdir /usr/local/bin/ffmpeg && \
   tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin/ffmpeg --strip-components 1 && \
-  chgrp -R users /usr/local/bin/ffmpeg && \
-  chmod g+x /usr/local/bin/ffmpeg/ffmpeg && \
-  chmod g+x /usr/local/bin/ffmpeg/ffprobe && \
+  chgrp users /usr/local/bin/ffmpeg && \
+  chgrp users /usr/local/bin/ffprobe && \
+  chmod g+x /usr/local/bin/ffmpeg && \
+  chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   rm -rf \
     /tmp/* \
