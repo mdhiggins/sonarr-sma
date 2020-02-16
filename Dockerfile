@@ -48,7 +48,7 @@ RUN \
 
 # update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
 ADD update.py /usr/local/bin/sma/update.py
-RUN /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py
+CMD /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py
 
 EXPOSE 8989
 VOLUME ["/usr/local/bin/sma/sickbeard_mp4_automator/autoProcess.ini"]
