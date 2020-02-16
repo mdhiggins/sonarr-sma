@@ -4,8 +4,9 @@ FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
-ENV LD_LIBRARY_PATH=/usr/local/lib
-COPY --from=jrffmpeg /usr/local/ /usr/local/
+#COPY --from=jrffmpeg /usr/local/ /usr/local/
+COPY --from=jrffmpeg / /
+
 # Variables
 ENV FFMPEG=/usr/local/bin/ffmpeg
 ENV FFPROBE=/usrlocal/bin/ffprobe
