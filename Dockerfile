@@ -1,5 +1,5 @@
-FROM linuxserver/sonarr
 FROM lsiobase/ffmpeg:bin as binstage
+FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from binstage
