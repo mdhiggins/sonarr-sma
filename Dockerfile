@@ -1,11 +1,10 @@
 ARG ffmpeg_tag=4.2-alpine
-FROM jrottenberg/ffmpeg:${ffmpeg_tag} as jrffmpeg
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
 ENV LD_LIBRARY_PATH=/usr/local/lib
-COPY --from=jrffmpeg /usr/local/ /usr/local/
+COPY --from=jrottenberg/ffmpeg:${ffmpeg_tag} /usr/local/ /usr/local/
 # Variables
 ENV FFMPEG=/usr/local/bin/ffmpeg
 ENV FFPROBE=/usrlocal/bin/ffprobe
