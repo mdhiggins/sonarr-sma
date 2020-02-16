@@ -47,6 +47,7 @@ RUN \
     /var/tmp/*
 
 EXPOSE 8989
+
 VOLUME /config
 VOLUME /usr/local/bin/sma/sickbeard_mp4_automator/autoProcess.ini
 
