@@ -3,7 +3,9 @@ FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from binstage
-COPY --from=binstage / /
+ # COPY --from=binstage / /
+COPY --from=binstage /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=binstage /usr/local/bin/ffprobe /usr/local/bin/ffprobe
 ENV FFMPEG=/usr/local/bin/ffmpeg
 ENV FFPROBE=/usrlocal/bin/ffprobe
 # get python3 and git, and install python libraries
@@ -52,10 +54,10 @@ RUN \
 # ffmpeg
   # wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
   # tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
-  chgrp users /usr/local/bin/ffmpeg && \
-  chgrp users /usr/local/bin/ffprobe && \
-  chmod g+x /usr/local/bin/ffmpeg && \
-  chmod g+x /usr/local/bin/ffprobe && \
+  # chgrp users /usr/local/bin/ffmpeg && \
+  # chgrp users /usr/local/bin/ffprobe && \
+  # chmod g+x /usr/local/bin/ffmpeg && \
+  # chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
