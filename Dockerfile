@@ -41,13 +41,6 @@ RUN \
   touch /var/log/sickbeard_mp4_automator/index.log && \
   chgrp -R users /var/log/sickbeard_mp4_automator && \
   chmod -R g+w /var/log/sickbeard_mp4_automator && \
-# ffmpeg
-  # wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
-  # tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
-  # chgrp users /usr/local/bin/ffmpeg && \
-  # chgrp users /usr/local/bin/ffprobe && \
-  # chmod g+x /usr/local/bin/ffmpeg && \
-  # chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
@@ -55,6 +48,9 @@ RUN \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/*
+ADD update.py /usr/local/bin/sma/update.py
+
+RUN /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py
 
 EXPOSE 8989
 VOLUME ["/usr/local/bin/sma/sickbeard_mp4_automator/autoProcess.ini"]
