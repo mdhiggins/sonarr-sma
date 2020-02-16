@@ -16,18 +16,7 @@ RUN \
     git \
     wget \
     python3 \
-    python3-pip \
-	  i965-va-driver \
-  	libexpat1 \
-  	libgl1-mesa-dri \
-  	libglib2.0-0 \
-	  libgomp1 \
-	  libharfbuzz0b \
-	  libv4l-0 \
-	  libx11-6 \
-	  libxcb1 \
-	  libxext6 \
-	  libxml2 && \
+    python3-pip && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
