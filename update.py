@@ -39,6 +39,8 @@ def main():
         safeConfigParser.set(section, "SSL", ssl)
     if webroot:
         safeConfigParser.set(section, "web_root", webroot)
+    if port:
+        safeConfigParser.set(section, "port", port)
 
     fp = open(autoProcess, "w")
     safeConfigParser.write(fp)
