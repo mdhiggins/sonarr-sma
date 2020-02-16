@@ -3,9 +3,8 @@ FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from binstage
- # COPY --from=binstage / /
-COPY --from=binstage /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
-COPY --from=binstage /usr/local/bin/ffprobe /usr/local/bin/ffprobe
+COPY --from=binstage /root/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=binstage /root/bin/ffprobe /usr/local/bin/ffprobe
 ENV FFMPEG=/usr/local/bin/ffmpeg
 ENV FFPROBE=/usrlocal/bin/ffprobe
 # get python3 and git, and install python libraries
