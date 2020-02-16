@@ -13,7 +13,7 @@ RUN \
     git \
     wget \
     python3 \
-    python3-pip && \
+    python3-pip \
 	  i965-va-driver \
   	libexpat1 \
   	libgl1-mesa-dri \
@@ -43,7 +43,7 @@ RUN \
     setuptools \
     qtfaststart && \
 # download repo
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma && \
 # create logging directory
   mkdir /var/log/sickbeard_mp4_automator && \
   touch /var/log/sickbeard_mp4_automator/index.log && \
