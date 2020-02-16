@@ -1,9 +1,12 @@
-FROM lsiobase/ffmpeg:bin as binstage
+ARG ffmpeg_tag=4.1-alpine
+FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
 FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
-# Add files from binstage
-COPY --from=binstage / /
+# Add files from ffmpeg
+COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg /usr/local/bin/ffmpeg /usr/local/bin/ffprobe
+# Variables
 ENV FFMPEG=/usr/local/bin/ffmpeg
 ENV FFPROBE=/usrlocal/bin/ffprobe
 # get python3 and git, and install python libraries
