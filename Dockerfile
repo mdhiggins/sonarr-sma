@@ -43,7 +43,7 @@ RUN \
     setuptools \
     qtfaststart && \
 # download repo
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma && \
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
 # create logging directory
   mkdir /var/log/sickbeard_mp4_automator && \
   touch /var/log/sickbeard_mp4_automator/index.log && \
