@@ -54,4 +54,4 @@ VOLUME /config
 
 # update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
 ADD update.py /usr/local/bin/sma/update.py
-CMD /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py && /init
+ADD smaconfig /etc/cont-init.d/smaconfig
