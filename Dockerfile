@@ -1,4 +1,4 @@
-FROM linuxserver/sonarr
+FROM linuxserver/sonarr:preview
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # get python3 and git, and install python libraries
