@@ -5,10 +5,7 @@ import configparser
 import xml.etree.ElementTree as ET
 
 xml = "/config/config.xml"
-autoProcess = "/usr/local/bin/sma/sickbeard_mp4_automator/autoProcess.ini"
-sections = {"7878": "Radarr",
-            "8989": "Sonarr"}
-
+autoProcess = os.environ.get("SMAPATH", "/usr/local/sma/sickbeard_mp4_automator/autoProcess.ini")
 
 def main():
     if not os.path.isfile(xml):
@@ -28,7 +25,7 @@ def main():
     ssl = root.find("EnableSsl").text
     ssl = ssl.lower() in ["true", "yes", "t", "1", "y"] if ssl else False
     apikey = root.find("ApiKey").text
-    section = sections.get(port)
+    section = "Sonarr"
 
     safeConfigParser = configparser.SafeConfigParser()
     safeConfigParser.read(autoProcess)
