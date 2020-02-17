@@ -31,7 +31,6 @@ def main():
 
     safeConfigParser = configparser.SafeConfigParser()
     safeConfigParser.read(autoProcess)
-
     safeConfigParser.set(section, "apikey", apikey)
     if ip:
         safeConfigParser.set(section, "host", ip)
@@ -41,6 +40,9 @@ def main():
         safeConfigParser.set(section, "web_root", webroot)
     if port:
         safeConfigParser.set(section, "port", port)
+
+    safeConfigParser.set("MP4", "ffmpeg", "/usr/local/bin/ffmpeg")
+    safeConfigParser.set("MP4", "ffprobe", "/usr/local/bin/ffprobe")
 
     fp = open(autoProcess, "w")
     safeConfigParser.write(fp)
