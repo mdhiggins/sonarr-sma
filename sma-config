@@ -1,1 +1,3 @@
+#!/usr/bin/with-contenv bash
+
 /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py
