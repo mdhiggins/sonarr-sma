@@ -16,6 +16,9 @@ RUN \
     wget \
     python3 \
     python3-pip && \
+    libva-drm2 && \
+    libva2 && \
+    i965-va-driver && \
 # make directory
   mkdir ${SMAPATH} && \
 # download repo
