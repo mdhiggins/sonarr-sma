@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv bash
+
+${SMAPATH}/env/bin/python3 ${SMAPATH}/update.py

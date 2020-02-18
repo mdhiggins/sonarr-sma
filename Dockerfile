@@ -6,6 +6,8 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 # Add files from ffmpeg
 COPY --from=ffmpeg /usr/local/ /usr/local/
 
+ENV SMAPATH /usr/local/sma
+
 # get python3 and git, and install python libraries
 RUN \
   apt-get update && \
@@ -14,12 +16,20 @@ RUN \
     wget \
     python3 \
     python3-pip && \
+# make directory
+  mkdir ${SMAPATH} && \
+# download repo
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMAPATH} && \
+# create logging directory
+  mkdir -p /var/log/sickbeard_mp4_automator && \
+  touch /var/log/sickbeard_mp4_automator/index.log && \
+  chgrp -R users /var/log/sickbeard_mp4_automator && \
+  chmod -R g+w /var/log/sickbeard_mp4_automator && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
-  mkdir /usr/local/bin/sma && \
-  python3 -m virtualenv /usr/local/bin/sma/env && \
-  /usr/local/bin/sma/env/bin/pip install requests \
+  python3 -m virtualenv ${SMAPATH}/env && \
+  ${SMAPATH}/env/bin/pip install requests \
     requests[security] \
     requests-cache \
     babelfish \
@@ -31,13 +41,6 @@ RUN \
     python-dateutil \
     setuptools \
     qtfaststart && \
-# download repo
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git /usr/local/bin/sma/sickbeard_mp4_automator && \
-# create logging directory
-  mkdir /var/log/sickbeard_mp4_automator && \
-  touch /var/log/sickbeard_mp4_automator/index.log && \
-  chgrp -R users /var/log/sickbeard_mp4_automator && \
-  chmod -R g+w /var/log/sickbeard_mp4_automator && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
@@ -51,5 +54,5 @@ EXPOSE 8989
 VOLUME /config
 
 # update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
-ADD update.py /usr/local/bin/sma/update.py
-CMD /usr/local/bin/sma/env/bin/python3 /usr/local/bin/sma/update.py && /init
+ADD update.py ${SMAPATH}/update.py
+ADD sma-config /etc/cont-init.d/98-sma-config
