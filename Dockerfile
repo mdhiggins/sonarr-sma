@@ -17,10 +17,6 @@ RUN \
     wget \
     python3 \
     python3-pip && \
-# additional requirements for VAAPI
-    libva-drm2 && \
-    libva2 && \
-    i965-va-driver && \
 # make directory
   mkdir ${SMAPATH} && \
 # download repo
@@ -49,6 +45,14 @@ RUN \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
+  rm -rf \
+    /tmp/* \
+    /var/lib/apt/lists/* \
+    /var/tmp/*
+
+RUN \
+	apt-get update -y && \
+	apt-get install -y --no-install-recommends libva-drm2 libva2 i965-va-driver && \
   rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \
