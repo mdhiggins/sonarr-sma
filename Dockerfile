@@ -17,6 +17,7 @@ RUN \
     wget \
     python3 \
     python3-pip && \
+# additional requirements for VAAPI
     libva-drm2 && \
     libva2 && \
     i965-va-driver && \
