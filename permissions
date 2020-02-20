@@ -1,4 +1,4 @@
-/var/log/sickbeard_mp4_automator true abc 0664 0775
-${SMAPATH} true abc 0755 0755
-/usr/local/bin/ffmpeg false abc 0755 0755
-/usr/local/bin/ffprobe false abc 0755 0755
+/var/log/sickbeard_mp4_automator true abc,${PUID}:${PGID} 0664 0775
+${SMAPATH} true abc,${PUID},${PGID} 0755 0755
+/usr/local/bin/ffmpeg false abc,${PUID},${PGID} 0755 0755
+/usr/local/bin/ffprobe false abc,${PUID},${PGID} 0755 0755
