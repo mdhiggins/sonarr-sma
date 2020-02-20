@@ -42,6 +42,9 @@ RUN \
     python-dateutil \
     setuptools \
     qtfaststart && \
+# ffmpeg
+  chown abc:abc /usr/local/bin/ff* && \
+  chmod 755 /usr/local/bin/ff* && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
