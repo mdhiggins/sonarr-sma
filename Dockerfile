@@ -8,8 +8,6 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 COPY --from=ffmpeg /usr/local/ /usr/local/
 
 ENV SMAPATH /usr/local/sma
-ENV PUID 1000
-ENV PGID 1000
 
 # get python3 and git, and install python libraries
 RUN \
@@ -26,8 +24,8 @@ RUN \
 # create logging directory
   mkdir -p /var/log/sickbeard_mp4_automator && \
   touch /var/log/sickbeard_mp4_automator/index.log && \
-  chown -R ${PUID}:${PGID} /var/log/sickbeard_mp4_automator && \
-  chmod -R 664 /var/log/sickbeard_mp4_automator && \
+  chgrp -R users /var/log/sickbeard_mp4_automator && \
+  chmod -R g+w /var/log/sickbeard_mp4_automator && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
@@ -45,8 +43,10 @@ RUN \
     setuptools \
     qtfaststart && \
 # ffmpeg
-  chown ${PUID}:${PGID} /usr/local/bin/ff* && \
-  chmod 755 /usr/local/bin/ff* && \
+  chgrp users /usr/local/bin/ffmpeg && \
+  chgrp users /usr/local/bin/ffprobe && \
+  chmod g+x /usr/local/bin/ffmpeg && \
+  chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
@@ -71,7 +71,3 @@ VOLUME /config
 ADD update.py ${SMAPATH}/update.py
 ADD postSonarr.sh ${SMAPATH}/postSonarr.sh
 ADD sma-config /etc/cont-init.d/98-sma-config
-
-RUN \
-  chown -R ${PUID}:${PGID} ${SMAPATH} && \
-  chmod -R 755 ${SMAPATH}
