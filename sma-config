@@ -1,12 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 # permissions
-chown -R abc:abc /var/log/sickbeard_mp4_automator
-chmod -R 664 /var/log/sickbeard_mp4_automator
-chown abc:abc /usr/local/bin/ff*
-chmod 755 /usr/local/bin/ff*
 chown -R abc:abc ${SMAPATH}
-chmod -R 755 ${SMAPATH}
+chmod -R 775 ${SMAPATH}
 
 # update autoprocess
 ${SMAPATH}/env/bin/python3 ${SMAPATH}/update.py
