@@ -8,6 +8,8 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 COPY --from=ffmpeg /usr/local/ /usr/local/
 
 ENV SMAPATH /usr/local/sma
+ENV PUID 1000
+ENV PGID 1000
 
 # get python3 and git, and install python libraries
 RUN \
