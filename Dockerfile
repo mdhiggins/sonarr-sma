@@ -24,8 +24,8 @@ RUN \
 # create logging directory
   mkdir -p /var/log/sickbeard_mp4_automator && \
   touch /var/log/sickbeard_mp4_automator/index.log && \
-  chgrp -R users /var/log/sickbeard_mp4_automator && \
-  chmod -R g+w /var/log/sickbeard_mp4_automator && \
+  chown -R abc:abc /var/log/sickbeard_mp4_automator && \
+  chmod -R 644 /var/log/sickbeard_mp4_automator && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
@@ -66,3 +66,7 @@ VOLUME /config
 ADD update.py ${SMAPATH}/update.py
 ADD postSonarr.sh ${SMAPATH}/postSonarr.sh
 ADD sma-config /etc/cont-init.d/98-sma-config
+
+RUN \
+  chown -R abc:abc ${SMAPATH} && \
+  chmod -R 755 ${SMAPATH}
