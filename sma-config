@@ -6,3 +6,5 @@ chmod -R 775 ${SMAPATH}
 
 # update autoprocess
 ${SMAPATH}/env/bin/python3 ${SMAPATH}/update.py
+
+exit $?
