@@ -2,6 +2,7 @@ FROM linuxserver/sonarr
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 ENV SMAPATH /usr/local/sma
+ENV SMARS Sonarr
 
 # get python3 and git, and install python libraries
 RUN \

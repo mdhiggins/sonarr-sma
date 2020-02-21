@@ -1,22 +1,24 @@
 #!/usr/bin/env python
 
 import os
+import sys
+import logging
 import configparser
 import xml.etree.ElementTree as ET
 
 xml = "/config/config.xml"
 autoProcess = os.environ.get("SMAPATH", "/usr/local/sma/sickbeard_mp4_automator")
 autoProcess = os.path.join(autoProcess, "autoProcess.ini")
-
+logging.getLogger(__name__)
 
 def main():
     if not os.path.isfile(xml):
-        print("No Sonarr/Radarr config file found")
-        return
+        logging.error("No Sonarr/Radarr config file found")
+        sys.exit(1)
 
     if not os.path.isfile(autoProcess):
-        print("autoProcess.ini does not exist")
-        return
+        logging.error("autoProcess.ini does not exist")
+        sys.exit(1)
 
     tree = ET.parse(xml)
     root = tree.getroot()
@@ -27,7 +29,10 @@ def main():
     ssl = root.find("EnableSsl").text
     ssl = ssl.lower() in ["true", "yes", "t", "1", "y"] if ssl else False
     apikey = root.find("ApiKey").text
-    section = "Sonarr"
+    section = os.environ.get("SMARS")
+    if not section:
+        logging.error("No Sonarr/Radarr specifying ENV variable")
+        sys.exit(1)
 
     safeConfigParser = configparser.SafeConfigParser()
     safeConfigParser.read(autoProcess)
@@ -52,7 +57,6 @@ def main():
     fp = open(autoProcess, "w")
     safeConfigParser.write(fp)
     fp.close()
-    print("autoProcess.ini updated with API key for %s" % section)
 
 
 if __name__ == '__main__':
