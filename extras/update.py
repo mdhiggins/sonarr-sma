@@ -9,7 +9,6 @@ import xml.etree.ElementTree as ET
 xml = "/config/config.xml"
 autoProcess = os.environ.get("SMAPATH", "/usr/local/sma/sickbeard_mp4_automator")
 autoProcess = os.path.join(autoProcess, "autoProcess.ini")
-logging.getLogger(__name__)
 
 def main():
     if not os.path.isfile(xml):
