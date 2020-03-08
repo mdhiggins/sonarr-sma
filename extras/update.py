@@ -10,6 +10,7 @@ xml = "/config/config.xml"
 autoProcess = os.environ.get("SMAPATH", "/usr/local/sma/sickbeard_mp4_automator")
 autoProcess = os.path.join(autoProcess, "autoProcess.ini")
 
+
 def main():
     if not os.path.isfile(xml):
         logging.error("No Sonarr/Radarr config file found")
@@ -37,14 +38,14 @@ def main():
     safeConfigParser.read(autoProcess)
 
     # Set FFMPEG/FFProbe Paths
-    safeConfigParser.set("MP4", "ffmpeg", "/usr/local/bin/ffmpeg")
-    safeConfigParser.set("MP4", "ffprobe", "/usr/local/bin/ffprobe")
+    safeConfigParser.set("Converter", "ffmpeg", "/usr/local/bin/ffmpeg")
+    safeConfigParser.set("Converter", "ffprobe", "/usr/local/bin/ffprobe")
 
     # Set values from config.xml
     safeConfigParser.set(section, "apikey", apikey)
-    safeConfigParser.set(section, "SSL", str(ssl))
+    safeConfigParser.set(section, "ssl", str(ssl))
     safeConfigParser.set(section, "port", sslport if ssl else port)
-    safeConfigParser.set(section, "web_root", webroot)
+    safeConfigParser.set(section, "webroot", webroot)
 
     # Set IP from environment variable
     ip = os.environ.get("HOST")
