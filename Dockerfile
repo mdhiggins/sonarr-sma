@@ -24,19 +24,8 @@ RUN \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
-  python3 -m virtualenv ${SMAPATH}/env && \
-  ${SMAPATH}/env/bin/pip install requests \
-    requests[security] \
-    requests-cache \
-    babelfish \
-    tmdbsimple \
-    guessit \
-    mutagen \
-    subliminal \
-    stevedore \
-    python-dateutil \
-    setuptools \
-    qtfaststart && \
+  python3 -m virtualenv ${SMAPATH}/venv && \
+  ${SMAPATH}/venv/bin/pip install -r ${SMAPATH}/requirements.txt && \
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
   tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
