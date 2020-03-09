@@ -7,8 +7,7 @@ import configparser
 import xml.etree.ElementTree as ET
 
 xml = "/config/config.xml"
-autoProcess = os.environ.get("SMAPATH", "/usr/local/sma/sickbeard_mp4_automator")
-autoProcess = os.path.join(autoProcess, "autoProcess.ini")
+autoProcess = os.path.join(os.environ.get("SMAPATH", "/usr/local/sma"), "sma/config/autoProcess.ini")
 
 
 def main():
