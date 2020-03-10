@@ -32,7 +32,7 @@ RUN \
   python3 -m pip install --user virtualenv && \
   python3 -m virtualenv ${SMAPATH}/venv && \
   cd ${SMAPATH} && \
-  ${SMAPATH}/venv/bin/pip install -r ${SMAPATH}/requirements.txt && \
+  ${SMAPATH}/venv/bin/pip install -r ${SMAPATH}/setup/requirements.txt && \
 # ffmpeg
   chgrp users /usr/local/bin/ffmpeg && \
   chgrp users /usr/local/bin/ffprobe && \
@@ -57,7 +57,7 @@ RUN \
 EXPOSE 8989
 
 VOLUME /config
-VOLUME /usr/local/sma/sma/config
+VOLUME /usr/local/sma/config
 
 # update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
 COPY extras/ ${SMAPATH}/
