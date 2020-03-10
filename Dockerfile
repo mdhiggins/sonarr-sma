@@ -26,7 +26,7 @@ RUN \
   python3 -m pip install --user virtualenv && \
   python3 -m virtualenv ${SMAPATH}/venv && \
   cd ${SMAPATH} && \
-  ${SMAPATH}/venv/bin/pip install -r ${SMAPATH}/requirements.txt && \
+  ${SMAPATH}/venv/bin/pip install -r ${SMAPATH}/setup/requirements.txt && \
 # ffmpeg
   wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-amd64-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
   tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
@@ -45,7 +45,7 @@ RUN \
 EXPOSE 8989
 
 VOLUME /config
-VOLUME /usr/local/sma/sma/config
+VOLUME /usr/local/sma/config
 
 # update.py sets FFMPEG/FFPROBE paths, updates API key and Sonarr/Radarr settings in autoProcess.ini
 COPY extras/ ${SMAPATH}/
