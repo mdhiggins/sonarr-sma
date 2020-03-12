@@ -1,10 +1,10 @@
 #!/usr/bin/with-contenv bash
 
 # permissions
-chown -R abc:abc ${SMAPATH}
-chmod -R 775 ${SMAPATH}/*.sh
+chown -R abc:abc ${SMA_PATH}
+chmod -R 775 ${SMA_PATH}/*.sh
 
 # update autoprocess
-${SMAPATH}/venv/bin/python3 ${SMAPATH}/update.py
+${SMA_PATH}/venv/bin/python3 ${SMA_PATH}/update.py
 
 exit $?
