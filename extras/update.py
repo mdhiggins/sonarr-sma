@@ -7,7 +7,7 @@ import configparser
 import xml.etree.ElementTree as ET
 
 xml = "/config/config.xml"
-autoProcess = os.path.join(os.environ.get("SMAPATH", "/usr/local/sma"), "config/autoProcess.ini")
+autoProcess = os.path.join(os.environ.get("SMA_PATH", "/usr/local/sma"), "config/autoProcess.ini")
 
 
 def main():
@@ -28,7 +28,7 @@ def main():
     ssl = root.find("EnableSsl").text
     ssl = ssl.lower() in ["true", "yes", "t", "1", "y"] if ssl else False
     apikey = root.find("ApiKey").text
-    section = os.environ.get("SMARS")
+    section = os.environ.get("SMA_RS")
     if not section:
         logging.error("No Sonarr/Radarr specifying ENV variable")
         sys.exit(1)
