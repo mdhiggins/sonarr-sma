@@ -33,7 +33,7 @@ def main():
         logging.error("No Sonarr/Radarr specifying ENV variable")
         sys.exit(1)
 
-    safeConfigParser = configparser.SafeConfigParser()
+    safeConfigParser = configparser.ConfigParser()
     safeConfigParser.read(autoProcess)
 
     # Set FFMPEG/FFProbe Paths
