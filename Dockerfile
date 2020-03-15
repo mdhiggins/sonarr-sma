@@ -9,6 +9,7 @@ COPY --from=ffmpeg /usr/local/ /usr/local/
 
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
+ENV SMA_UPDATE false
 
 # get python3 and git, and install python libraries
 RUN \
