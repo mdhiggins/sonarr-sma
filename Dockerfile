@@ -23,10 +23,6 @@ RUN \
   mkdir ${SMA_PATH} && \
 # download repo
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
-# create logging file
-  touch /var/log/sma.log && \
-  chgrp users /var/log/sma.log && \
-  chmod g+w /var/log/sma.log && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
   python3 -m pip install --user virtualenv && \
