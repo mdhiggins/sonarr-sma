@@ -22,7 +22,10 @@ def main():
     tree = ET.parse(xml)
     root = tree.getroot()
     port = root.find("Port").text
-    sslport = root.find("SslPort").text
+    try:
+        sslport = root.find("SslPort").text
+    except:
+        sslport = port
     webroot = root.find("UrlBase").text
     webroot = webroot if webroot else ""
     ssl = root.find("EnableSsl").text
