@@ -88,7 +88,7 @@ Using the `build` tag leverages mulit-stage docker builds to generate FFMPEG com
 
 ### VAAPI docker-compose sample
 ~~~
-yaml
+services:
   sonarr:
     container_name: sonarr
     build:
