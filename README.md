@@ -17,7 +17,7 @@ As of 3/9/2020 the containers were overhauled and the location of the script was
 
 ### docker-compose
 ~~~
-yaml
+services:
   sonarr:
     image: mdhiggins/sonarr-sma
     container_name: sonarr
