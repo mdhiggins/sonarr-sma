@@ -18,7 +18,8 @@ RUN \
     git \
     wget \
     python3 \
-    python3-pip && \
+    python3-pip \
+    pymediainfo && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
