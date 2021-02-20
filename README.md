@@ -77,6 +77,7 @@ Located at `/usr/local/sma/config/sma.log` inside the container and your mounted
 |HOST|Local IP address for callback requests, default `127.0.0.1`|
 |SMA_PATH|`/usr/local/sma`|
 |SMA_UPDATE|Default `false`. Set `true` to pull git update of SMA on restart|
+|SMA_FFMPEG_URL|Defaults to latest static build from https://johnvansickle.com but can override by changing this var|
 
 ## Special Considerations
 Using the `build` tag leverages mulit-stage docker builds to generate FFMPEG compiled using [jrottenberg/ffmpeg's](https://hub.docker.com/r/jrottenberg/ffmpeg) containers. This allows flexibility with building FFMPEG using special options such as VAAPI or NVENC. Building locally allows `ARG` values to be set to change the underlying parent container tags as below
