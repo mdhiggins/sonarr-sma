@@ -29,17 +29,6 @@ jobs:
             name: Build dockerfile (with push)
             run: |
                 docker buildx build \
-                --platform=linux/amd64 \
+                --platform=linux/amd64,linux/armhf,linux/arm64 \
                 --output "type=image,push=true" \
-                --file ./Dockerfile . \
-                --tag mdhiggins/sonarr-sma && \
-                docker buildx build \
-                --platform=linux/arm64 \
-                --output "type=image,push=true" \
-                --file ./Dockerfile.arm64 . \
-                --tag mdhiggins/sonarr-sma && \
-                docker buildx build \
-                --platform=linux/armhf \
-                --output "type=image,push=true" \
-                --file ./Dockerfile.armhf . \
                 --tag mdhiggins/sonarr-sma
