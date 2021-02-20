@@ -31,4 +31,5 @@ jobs:
                 docker buildx build \
                 --platform=linux/amd64,linux/armhf,linux/arm64 \
                 --output "type=image,push=true" \
+                --file ./Dockerfile . \
                 --tag mdhiggins/sonarr-sma
