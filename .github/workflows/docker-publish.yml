@@ -5,6 +5,10 @@ on:
     branches:
       - 'master'
 
+env:
+  tag: latest
+  project: sonarr-sma
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -44,7 +48,7 @@ jobs:
           file: ./${{ matrix.dockerfile }}
           platforms: linux/${{ matrix.platform }}
           push: true
-          tags: mdhiggins/sonarr-sma:latest-${{ matrix.platform }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-${{ matrix.platform }}
 
   publish:
     runs-on: ubuntu-lastest
@@ -65,11 +69,11 @@ jobs:
           DOCKER_CLI_EXPERIMENTAL: enabled
         run: |
           docker manifest create \
-          mdhiggins/sonarr-sma:latest \
-          --amend mdhiggins/sonarr-sma:latest-amd64 \
-          --amend mdhiggins/sonarr-sma:latest-armhf \
-          --amend mdhiggins/sonarr-sma:latest-arm64
+          ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }} \
+          --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-amd64 \
+          --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-armhf \
+          --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-arm64
       -
         name: Push manifest to DockerHub
         run: |
-          docker manifest push mdhiggins/sonarr-sma:latest
+          docker manifest push ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}
