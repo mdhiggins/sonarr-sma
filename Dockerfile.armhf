@@ -4,6 +4,7 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
+ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz
 
 # get python3 and git, and install python libraries
 RUN \
@@ -28,7 +29,7 @@ RUN \
   python3 -m virtualenv ${SMA_PATH}/venv && \
   ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
 # ffmpeg
-  wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-armhf-static.tar.xz -O /tmp/ffmpeg.tar.xz && \
+  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
   tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
   chgrp users /usr/local/bin/ffmpeg && \
   chgrp users /usr/local/bin/ffprobe && \
