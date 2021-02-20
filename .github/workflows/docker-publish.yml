@@ -3,10 +3,10 @@ name: ci
 on:
   push:
     branches:
-      - 'master'
+      - 'preview'
 
 env:
-  tag: latest
+  tag: preview
   project: sonarr-sma
 
 jobs:
