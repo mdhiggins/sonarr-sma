@@ -8,6 +8,18 @@ on:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          -
+            dockerfile: Dockerfile
+            platform: linux/amd64
+          -
+            dockerfile: Dockerfile.armhf
+            platform: linux/armhf
+          -
+            dockerfile: Dockerfile.arm64
+            platform: linux/arm64
     steps:
       -
         name: Checkout
@@ -29,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: linux/amd64,linux/arm64,linux/armhf
+          file: ./${{ matrix.dockerfile }}
+          platforms: ${{ matrix.platform }}
           push: true
           tags: mdhiggins/sonarr-sma:latest
