@@ -24,7 +24,7 @@ jobs:
             id: buildx
             uses: crazy-max/ghaction-docker-buildx@v1
             with:
-                version: latest
+                buildx-version: latest
         -
             name: Build dockerfile (with push)
             run: |
@@ -32,4 +32,14 @@ jobs:
                 --platform=linux/amd64 \
                 --output "type=image,push=true" \
                 --file ./Dockerfile . \
-                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma
+                --tag mdhiggins/sonarr-sma && \
+                docker buildx build \
+                --platform=linux/arm64 \
+                --output "type=image,push=true" \
+                --file ./Dockerfile.arm64 . \
+                --tag mdhiggins/sonarr-sma && \
+                docker buildx build \
+                --platform=linux/armhf \
+                --output "type=image,push=true" \
+                --file ./Dockerfile.armhf . \
+                --tag mdhiggins/sonarr-sma
