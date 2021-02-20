@@ -46,7 +46,7 @@ jobs:
           push: true
           tags: mdhiggins/sonarr-sma:latest-${{ matrix.platform }}
 
-publish:
+  publish:
     runs-on: ubuntu-lastest
     needs: [docker]
     steps:
