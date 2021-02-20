@@ -32,14 +32,14 @@ jobs:
                 --platform=linux/amd64 \
                 --output "type=image,push=true" \
                 --file ./Dockerfile . \
-                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma:latest && \
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma && \
                 docker buildx build \
                 --platform=linux/arm64 \
                 --output "type=image,push=true" \
                 --file ./Dockerfile.arm64 . \
-                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma:latest && \
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma && \
                 docker buildx build \
                 --platform=linux/armhf \
                 --output "type=image,push=true" \
                 --file ./Dockerfile.armhf . \
-                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma:latest
+                --tag $(echo "${DOCKER_USERNAME}" | tr '[:upper:]' '[:lower:]')/sonarr-sma
