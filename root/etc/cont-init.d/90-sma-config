@@ -2,8 +2,8 @@
 
 # ffmpeg
 if [[ -f "/usr/local/bin/ffmpeg" ]]
-    :
 then
+    :
 else
     wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
     tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1
