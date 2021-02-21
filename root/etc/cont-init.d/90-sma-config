@@ -1,5 +1,19 @@
 #!/usr/bin/with-contenv bash
 
+# ffmpeg
+if [[ -f "/usr/local/bin/ffmpeg" ]]
+then
+    echo "FFmpeg already exists"
+else
+    wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
+    tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1
+    chown abc:abc /usr/local/bin/ffmpeg
+    chown abc:abc /usr/local/bin/ffprobe
+    chmod g+x /usr/local/bin/ffmpeg
+    chmod g+x /usr/local/bin/ffprobe
+    rm -rf /tmp/*
+fi
+
 # update from git
 if [[ "${SMA_UPDATE}" == "true" ]]
 then
