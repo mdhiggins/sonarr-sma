@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - 'preview'
+  schedule:
+    - cron:  '0 0 * * *'
 
 env:
   tag: preview
