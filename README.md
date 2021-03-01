@@ -80,7 +80,7 @@ Located at `/usr/local/sma/config/sma.log` inside the container and your mounted
 |SMA_FFMPEG_URL|Defaults to latest static build from https://johnvansickle.com but can override by changing this var|
 
 ## Special Considerations
-Using the `build` tag leverages mulit-stage docker builds to generate FFMPEG compiled using [jrottenberg/ffmpeg's](https://hub.docker.com/r/jrottenberg/ffmpeg) containers. This allows flexibility with building FFMPEG using special options such as VAAPI or NVENC. Building locally allows `ARG` values to be set to change the underlying parent container tags as below
+Using the `build` tag leverages mulit-stage docker builds to generate FFMPEG compiled using [jrottenberg/ffmpeg's](https://hub.docker.com/r/jrottenberg/ffmpeg) containers. This allows flexibility with building FFMPEG using special options such as VAAPI or NVENC. Building locally allows `ARG` values to be set to change the underlying parent container tags as below. It is recommended that you match your Ubuntu version in the ffmpeg_tag and sonarr_tag to ensure no missing dependencies.
 
 |ARG|Default|Description|
 |---|---|---|
