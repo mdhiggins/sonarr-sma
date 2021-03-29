@@ -8,7 +8,7 @@ Docker container for Sonarr that includes all FFMPEG and python requirements to 
 |---|---|
 |latest|Stable release from Sonarr with precompiled FFMPEG binaries|
 |build|Stable release from Sonarr with FFMPEG compiled from jrottenberg/ffmpeg|
-|preview|Preview release from Sonarr with precompiled FFMPEG binaries|
+|develop|Preview release from Sonarr with precompiled FFMPEG binaries|
 
 ## Usage
 

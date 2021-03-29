@@ -3,12 +3,12 @@ name: Docker Publish
 on:
   push:
     branches:
-      - 'preview'
+      - 'develop'
   schedule:
     - cron:  '0 6 * * 0'
 
 env:
-  tag: preview
+  tag: develop
   project: sonarr-sma
 
 jobs:
