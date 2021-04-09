@@ -1,9 +1,65 @@
 #!/usr/bin/with-contenv bash
 
+export DEBIAN_FRONTEND="noninteractive"
+
+# env check
+if [[ -z "${SMA_PATH}" ]]; then
+    export SMA_PATH="/usr/local/sma"
+fi
+
+# check virtual python environment
+if [[ -f "${SMA_PATH}/venv/bin/python3" ]]
+then
+    :
+else
+    apt-get -y -qq update >/dev/null
+    apt-get install -y -qq \
+        wget \
+        python3 \
+        python3-pip \
+        git >/dev/null
+    python3 -m pip install -q --user --upgrade pip
+    python3 -m pip install -q --user virtualenv --no-warn-script-location
+    python3 -m virtualenv -q ${SMA_PATH}/venv
+    ${SMA_PATH}/venv/bin/pip install -q -r ${SMA_PATH}/setup/requirements.txt
+fi
+
 # update from git
 if [[ "${SMA_UPDATE}" == "true" ]]
 then
-    git -C ${SMA_PATH} pull origin master
+    git -C ${SMA_PATH} pull origin master --quiet
+fi
+
+# ffmpeg
+if [[ -f "/usr/local/bin/ffmpeg" ]]
+then
+    :
+else
+    # check ffmpeg URL
+    if [[ -z "${SMA_FFMPEG_URL}" ]]; then
+    architecture=$(dpkg --print-architecture)
+    case "$architecture" in
+        'amd64')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+        ;;
+        'armhf')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz"
+        ;;
+        'arm64')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz"
+        ;;
+        *)
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
+        ;;
+    esac
+    fi
+    wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
+    tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1
+    chown abc:abc /usr/local/bin/ffmpeg
+    chown abc:abc /usr/local/bin/ffprobe
+    chmod g+x /usr/local/bin/ffmpeg
+    chmod g+x /usr/local/bin/ffprobe
+    rm -rf /tmp/*
 fi
 
 # permissions
