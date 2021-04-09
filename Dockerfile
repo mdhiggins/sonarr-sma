@@ -23,13 +23,13 @@ RUN \
   python3 -m pip install --user virtualenv && \
   python3 -m virtualenv ${SMA_PATH}/venv && \
   ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
-# ffmpeg
-  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
-  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
-  chgrp users /usr/local/bin/ffmpeg && \
-  chgrp users /usr/local/bin/ffprobe && \
-  chmod g+x /usr/local/bin/ffmpeg && \
-  chmod g+x /usr/local/bin/ffprobe && \
+# ffmpeg (disabled for now)
+#  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
+#  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
+#  chgrp users /usr/local/bin/ffmpeg && \
+#  chgrp users /usr/local/bin/ffprobe && \
+#  chmod g+x /usr/local/bin/ffmpeg && \
+#  chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   apt-get purge --auto-remove -y && \
   apt-get clean && \
