@@ -42,6 +42,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+      - 
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1 
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
       -
         name: Build and push
         uses: docker/build-push-action@v2
@@ -50,7 +57,9 @@ jobs:
           file: ./${{ matrix.dockerfile }}
           platforms: linux/${{ matrix.platform }}
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-${{ matrix.platform }}
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-${{ matrix.platform }}
+            ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }}-${{ matrix.platform }}
 
   publish:
     runs-on: ubuntu-latest
@@ -66,6 +75,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - 
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1 
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ github.token }}
+      - 
         name: Create manifests for DockerHub
         env:
           DOCKER_CLI_EXPERIMENTAL: enabled
@@ -75,7 +91,13 @@ jobs:
           --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-amd64 \
           --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-armhf \
           --amend ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-arm64
+          docker manifest create \
+          ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }} \
+          --amend ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }}-amd64 \
+          --amend ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }}-armhf \
+          --amend ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }}-arm64
       -
         name: Push manifest to DockerHub
         run: |
           docker manifest push ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}
+          docker manifest push ghcr.io/${{ github.repository_owner }}/${{ github.repository }}:${{ env.tag }}
