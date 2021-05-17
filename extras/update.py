@@ -5,12 +5,16 @@ import sys
 import logging
 import configparser
 import xml.etree.ElementTree as ET
+from resources.readsettings import ReadSettings
 
 xml = "/config/config.xml"
 autoProcess = os.path.join(os.environ.get("SMA_PATH", "/usr/local/sma"), "config/autoProcess.ini")
 
 
 def main():
+    # Ensure a valid config file
+    ReadSettings()
+
     if not os.path.isfile(autoProcess):
         logging.error("autoProcess.ini does not exist")
         sys.exit(1)
