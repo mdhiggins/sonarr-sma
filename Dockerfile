@@ -18,7 +18,10 @@ RUN \
     git \
     wget \
     python3 \
-    python3-pip && \
+    python3-pip \
+    libnppig10 \
+    libnppicc10 \
+    libnppidei10 && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
