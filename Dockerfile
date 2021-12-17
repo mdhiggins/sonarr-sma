@@ -1,4 +1,4 @@
-ARG ffmpeg_tag=4.3-ubuntu
+ARG ffmpeg_tag=4.4-ubuntu
 ARG sonarr_tag=latest
 ARG extra_packages
 FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
