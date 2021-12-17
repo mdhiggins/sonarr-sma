@@ -2,7 +2,7 @@ ARG ffmpeg_tag=4.3-ubuntu
 ARG sonarr_tag=latest
 ARG extra_packages
 FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
-FROM linuxserver/sonarr:${sonarr_tag}
+FROM lscr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
