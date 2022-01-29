@@ -96,5 +96,6 @@ services:
     build:
       context: https://github.com/mdhiggins/sonarr-sma.git#build
       args:
-        - ffmpeg_tag=4.2-vaapi
+        sonarr-tag: develop
+        ffmpeg_tag: 4.4-vaapi
 ~~~
