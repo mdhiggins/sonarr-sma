@@ -23,8 +23,8 @@ def main():
     safeConfigParser.read(autoProcess)
 
     # Set FFMPEG/FFProbe Paths
-    safeConfigParser.set("Converter", "ffmpeg", "/usr/local/bin/ffmpeg")
-    safeConfigParser.set("Converter", "ffprobe", "/usr/local/bin/ffprobe")
+    safeConfigParser.set("Converter", "ffmpeg", "ffmpeg")
+    safeConfigParser.set("Converter", "ffprobe", "ffprobe")
 
     section = os.environ.get("SMA_RS")
     if section and os.path.isfile(xml):
