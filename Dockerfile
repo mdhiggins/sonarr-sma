@@ -1,12 +1,18 @@
+ARG ffmpeg_source=jrottenberg/ffmpeg
 ARG ffmpeg_tag=4.4-ubuntu
 ARG sonarr_tag=latest
 ARG extra_packages
-FROM jrottenberg/ffmpeg:${ffmpeg_tag} as ffmpeg
+FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
+
+RUN \
+  mkdir -p /build
+
 FROM lscr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
 COPY --from=ffmpeg /usr/local/ /usr/local/
+COPY --from=ffmpeg /build /
 
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
