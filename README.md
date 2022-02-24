@@ -89,7 +89,6 @@ Using the `build` tag leverages mulit-stage docker builds to generate FFMPEG com
 |---|---|---|
 |ffmpeg_tag|latest|Set tag to correspond to jrottenberg/ffmpeg:tag|
 |sonarr_tag|latest|Set tag to correspond to linuxserver/sonarr:tag|
-|extra_packages||Set additional packages/dependencies that might need to be installed via apt-get, separated by spaces|
 
 ### VAAPI docker-compose sample
 ~~~yml
