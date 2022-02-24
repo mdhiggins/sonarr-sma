@@ -1,7 +1,6 @@
 ARG ffmpeg_source=jrottenberg/ffmpeg
 ARG ffmpeg_tag=4.4-ubuntu
 ARG sonarr_tag=latest
-ARG extra_packages
 FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
 
 RUN \
