@@ -8,7 +8,7 @@ FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
 RUN \
   mkdir -p /build
 
-FROM lscr.io/linuxserver/sonarr:${sonarr_tag}
+FROM ghcr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # Add files from ffmpeg
