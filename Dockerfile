@@ -1,4 +1,4 @@
-FROM lscr.io/linuxserver/sonarr:develop
+FROM ghcr.io/linuxserver/sonarr:develop
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 ENV SMA_PATH /usr/local/sma
