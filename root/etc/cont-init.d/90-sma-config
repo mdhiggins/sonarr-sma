@@ -20,6 +20,7 @@ if [ -f /usr/bin/apt ]; then
         python3-pip \
         python3-venv \
         fontconfig \
+        ttf-dejavu \
         git > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
@@ -36,6 +37,7 @@ elif [ -f /sbin/apk ]; then
         python3 \
         py3-pip \
         fontconfig \
+        ttf-dejavu \
         git > /dev/null
     apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
