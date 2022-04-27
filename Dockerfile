@@ -52,6 +52,8 @@ RUN \
   fi && \
 # make directory
   mkdir ${SMA_PATH} && \
+# download repo
+  git config --global --add safe.directory ${SMA_PATH} && \
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m pip install --user --upgrade pip && \
