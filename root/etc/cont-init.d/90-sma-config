@@ -28,6 +28,10 @@ if [ -f /usr/bin/apt ]; then
             libva \
             i965-va-driver > /dev/null
     fi
+    if [[ "${SMA_USE_REPO}" == "true" ]]; then
+        apt-get install --no-install-recommends -y -qq \
+            ffmpeg > /dev/null
+    fi
 elif [ -f /sbin/apk ]; then
     # Alpine
     apk update > /dev/null
@@ -76,12 +80,12 @@ if [[ -f "${SMA_PATH}/venv/bin/python3" ]]; then
 else
     echo "[90-sma-config] Creating python virtual environment and installing requirements"
     python3 -m venv ${SMA_PATH}/venv
-    ${SMA_PATH}/venv/bin/python3 -m pip install -q --upgrade pip > /dev/null
-    ${SMA_PATH}/venv/bin/pip install -q \
+    ${SMA_PATH}/venv/bin/python3 -m pip install -q --upgrade pip --no-cache-dir > /dev/null
+    ${SMA_PATH}/venv/bin/pip install -q --no-cache-dir \
         -r ${SMA_PATH}/setup/requirements.txt > /dev/null
-    if [[ -z "${SMA_RS}" && -f /usr/bin/apt ]]; then
+    if [[ -z "${SMA_RS}" ]]; then
     echo "[90-sma-config] Installing additional deluge/qbittorrent requirements"
-    ${SMA_PATH}/venv/bin/pip install -q \
+    ${SMA_PATH}/venv/bin/pip install -q --no-cache-dir \
         -r ${SMA_PATH}/setup/requirements-deluge.txt \
         -r ${SMA_PATH}/setup/requirements-qbittorrent.txt > /dev/null
     fi
