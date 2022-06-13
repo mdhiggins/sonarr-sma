@@ -105,7 +105,7 @@ services:
       - /dev/dri/renderD128:/dev/dri/renderD128
 ~~~
 
-For the newer linuxserver Sonarr builds based on mono the jrottenberg FFMpeg builds are not compatible and will have issues with VAAPI. The repo build of FFMpeg however includes VAAPI with appropriate libaries so you can use non-build tags with the `SMA_USE_REPO` environment variable set to `true` to enable VAAPI supported FFMpeg builds
+For the newer Linuxserver Sonarr builds based on mono the jrottenberg FFMpeg builds are not compatible and will have issues with VAAPI. The repo build of FFMpeg however includes VAAPI with appropriate libaries so you can use non-build tags with the `SMA_USE_REPO` environment variable set to `true` to enable VAAPI supported FFMpeg builds
 
 ~~~yml
 services:
@@ -127,3 +127,6 @@ services:
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
 ~~~
+
+### NVIDIA / NVEnc
+Currently nVidia and NVEnc are not supported on mono which is used by the lastest Linuxserver containers. In order to use NVEnc or nVidia hardare accleration you will need to use an older tag that is still based on Ubuntu
