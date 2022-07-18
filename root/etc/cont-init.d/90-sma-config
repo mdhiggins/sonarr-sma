@@ -21,12 +21,15 @@ if [ -f /usr/bin/apt ]; then
         python3-venv \
         fontconfig \
         ttf-dejavu \
-        git > /dev/null
+        git \
+        ${SMA_EXTRA_PACKAGES} > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
             libva-drm2 \
             libva \
-            i965-va-driver > /dev/null
+            i965-va-driver \
+            intel-media-va-driver \
+            mesa-va-drivers > /dev/null
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
@@ -42,7 +45,8 @@ elif [ -f /sbin/apk ]; then
         py3-pip \
         fontconfig \
         ttf-dejavu \
-        git > /dev/null
+        git \
+        ${SMA_EXTRA_PACKAGES} > /dev/null
     apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apk add --no-cache \
@@ -50,7 +54,8 @@ elif [ -f /sbin/apk ]; then
             libgomp \
             vidstab \
             ca-certificates \
-            libva-intel-driver > /dev/null
+            libva-intel-driver \
+            mesa-va-gallium > /dev/null
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
         apk add --no-cache \
