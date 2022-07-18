@@ -101,4 +101,32 @@ services:
       args:
         sonarr-tag: develop
         ffmpeg_tag: 4.4-vaapi2004
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
 ~~~
+
+For the newer Linuxserver Sonarr builds based on mono the jrottenberg FFMpeg builds are not compatible and will have issues with VAAPI. The repo build of FFMpeg however includes VAAPI with appropriate libaries so you can use non-build tags with the `SMA_USE_REPO` environment variable set to `true` to enable VAAPI supported FFMpeg builds
+
+~~~yml
+services:
+  sonarr:
+    image: mdhiggins/sonarr-sma
+    container_name: sonarr
+    volumes:
+      - /opt/appdata/sonarr:/config
+      - /opt/appdata/sma:/usr/local/sma/config
+      - /mnt/storage/tv:/tv
+      - /mnt/storage/downloads:/downloads
+    ports:
+      - 8989:8989
+    restart: always
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - SMA_USE_REPO=true
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+~~~
+
+### NVIDIA / NVEnc
+Currently nVidia and NVEnc are not supported on mono which is used by the lastest Linuxserver containers. In order to use NVEnc or nVidia hardare accleration you will need to use an older tag that is still based on Ubuntu
