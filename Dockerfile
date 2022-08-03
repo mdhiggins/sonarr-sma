@@ -8,8 +8,8 @@ ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd6
 
 # get python3 and git, and install python libraries
 RUN \
-  apk update && \
-  apk-get install --no-install-recommends -y \
+  apt-get update && \
+  apt-get install --no-install-recommends -y \
     git \
     wget \
     python3 \
