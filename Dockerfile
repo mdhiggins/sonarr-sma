@@ -9,11 +9,11 @@ ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd6
 # get python3 and git, and install python libraries
 RUN \
   apk update && \
-  apk add --no-cache \
+  apk-get install --no-install-recommends -y \
     git \
     wget \
     python3 \
-    py3-pip && \
+    python3-pip && \
 # make directory
   mkdir ${SMA_PATH} && \
 # download repo
@@ -32,10 +32,11 @@ RUN \
 #  chmod g+x /usr/local/bin/ffmpeg && \
 #  chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
-  apk del --purge && \
+  apt-get purge --auto-remove -y && \
   rm -rf \
-    /root/.cache \
-    /tmp/*
+    /tmp/* \
+    /var/lib/apt/lists/* \
+    /var/tmp/*
 
 EXPOSE 8989
 
