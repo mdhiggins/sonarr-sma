@@ -29,6 +29,7 @@ if [ -f /usr/bin/apt ]; then
             libva \
             i965-va-driver \
             intel-media-va-driver \
+            intel-media-va-driver-non-free \
             mesa-va-drivers > /dev/null
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
