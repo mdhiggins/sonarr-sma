@@ -26,7 +26,7 @@ if [ -f /usr/bin/apt ]; then
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
             libva-drm2 \
-            libva \
+            libva2 \
             i965-va-driver \
             intel-media-va-driver \
             intel-media-va-driver-non-free \
