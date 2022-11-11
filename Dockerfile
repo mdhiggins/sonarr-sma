@@ -8,6 +8,8 @@ ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd6
 
 # get python3 and git, and install python libraries
 RUN \
+  # remove bad source until they fix https
+  rm /etc/apt/sources.list.d/mediaarea.list && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     git \
