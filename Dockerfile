@@ -22,6 +22,8 @@ ENV SMA_HWACCEL true
 
 RUN \
   if [ -f /usr/bin/apt ]; then \
+    # remove bad source until they fix https
+    rm /etc/apt/sources.list.d/mediaarea.list && \
     apt-get update && \
     apt-get install -y \
       git \
