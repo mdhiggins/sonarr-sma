@@ -9,7 +9,7 @@ ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm6
 # get python3 and git, and install python libraries
 RUN \
   apk update && \
-  apk add --no-cache -y \
+  apk add --no-cache \
     git \
     wget \
     python3 \
