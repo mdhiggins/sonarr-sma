@@ -58,6 +58,7 @@ jobs:
           file: ./${{ matrix.dockerfile }}
           platforms: linux/${{ matrix.platform }}
           push: true
+          provenance: false
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/${{ env.project }}:${{ env.tag }}-${{ matrix.platform }}
             ghcr.io/${{ github.repository }}:${{ env.tag }}-${{ matrix.platform }}
