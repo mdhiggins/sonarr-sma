@@ -56,6 +56,7 @@ elif [ -f /sbin/apk ]; then
             vidstab \
             ca-certificates \
             libva-intel-driver \
+            intel-media-driver \
             mesa-va-gallium > /dev/null
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
