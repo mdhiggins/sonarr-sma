@@ -20,7 +20,7 @@ if [ -f /usr/bin/apt ]; then
         python3-pip \
         python3-venv \
         fontconfig \
-        ttf-dejavu \
+        fonts-dejavu \
         git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
