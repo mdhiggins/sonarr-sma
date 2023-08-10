@@ -1,4 +1,4 @@
-ARG ffmpeg_source=linuxserver/ffmpeg
+ARG ffmpeg_source=ghcr.io/linuxserver/ffmpeg
 ARG ffmpeg_tag=latest
 ARG sonarr_tag=latest
 ARG extra_packages
