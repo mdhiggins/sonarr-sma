@@ -1,14 +1,14 @@
-ARG ffmpeg_source=jrottenberg/ffmpeg
-ARG ffmpeg_tag=4.4-ubuntu
+ARG ffmpeg_source=linuxserver/ffmpeg
+ARG ffmpeg_tag=latest
 ARG sonarr_tag=latest
 ARG extra_packages
 
-FROM ghcr.io/linuxserver/ffmpeg AS ffmpeg
+FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
 
-FROM ghcr.io/linuxserver/sonarr AS sonarr
+FROM ghcr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
-# copy ffmpeg executable from linuxserver
+# copy ffmpeg install from linuxserver
 COPY --from=ffmpeg / /
 
 ENV SMA_PATH /usr/local/sma
