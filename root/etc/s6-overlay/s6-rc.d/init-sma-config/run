@@ -19,7 +19,6 @@ if [ -f /usr/bin/apt ]; then
         python3 \
         python3-pip \
         python3-venv \
-        fontconfig \
         fonts-dejavu \
         git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
@@ -43,7 +42,6 @@ elif [ -f /sbin/apk ]; then
         xz \
         python3 \
         py3-pip \
-        fontconfig \
         ttf-dejavu \
         git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
