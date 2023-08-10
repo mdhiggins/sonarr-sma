@@ -5,52 +5,7 @@ if [[ -z "${SMA_PATH}" ]]; then
     export SMA_PATH="/usr/local/sma"
 fi
 
-if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
-    export SMA_STRIP_COMPONENTS=1
-fi
-
-if [ -f /usr/bin/apt ]; then
-    ## Ubuntu
-    export DEBIAN_FRONTEND="noninteractive"
-    apt-get -y -qq update > /dev/null
-    apt-get install --no-install-recommends -y -qq \
-        wget \
-        xz-utils \
-        python3 \
-        python3-pip \
-        python3-venv \
-        fonts-dejavu \
-        ${SMA_EXTRA_PACKAGES} > /dev/null
-elif [ -f /sbin/apk ]; then
-    # Alpine
-    apk update > /dev/null
-    apk add --no-cache \
-        wget \
-        xz \
-        python3 \
-        py3-pip \
-        fontconfig \
-        ttf-dejavu \
-        git \
-        ${SMA_EXTRA_PACKAGES} > /dev/null
-    apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community > /dev/null
-    if [[ "${SMA_HWACCEL}" == "true" ]]; then
-        apk add --no-cache \
-            libva \
-            libgomp \
-            vidstab \
-            ca-certificates \
-            libva-intel-driver \
-            intel-media-driver \
-            mesa-va-gallium \
-            mesa-dri-gallium > /dev/null
-    fi
-    if [[ "${SMA_USE_REPO}" == "true" ]]; then
-        apk add --no-cache \
-            ffmpeg > /dev/null
-    fi
-fi
-
+# check sma installation
 if [[ -f "${SMA_PATH}/manual.py" ]]; then
     # update from git
     if [[ "${SMA_UPDATE}" == "true" ]]
@@ -85,6 +40,10 @@ else
 fi
 
 # ffmpeg
+if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
+    export SMA_STRIP_COMPONENTS=1
+fi
+
 if [[ -v "${SMA_FFMPEG_URL}" ]]; then
     echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
     echo "[90-sma-config] Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
