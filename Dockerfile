@@ -9,7 +9,10 @@ FROM ghcr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
 # copy ffmpeg install from linuxserver
-COPY --from=ffmpeg / /
+COPY --from=ffmpeg /usr/lib/ /usr/lib/
+COPY --from=ffmpeg /usr/local/ /usr/local/
+COPY --from=ffmpeg /etc/ /etc/
+COPY --from=ffmpeg /lib/ /lib/
 
 ENV \
   LIBVA_DRIVERS_PATH="/usr/local/lib/x86_64-linux-gnu/dri" \
