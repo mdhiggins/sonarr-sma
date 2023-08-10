@@ -8,7 +8,7 @@ FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
 FROM ghcr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
-# copy ffmpeg install from linuxserver
+# copy ffmpeg install from source
 COPY --from=ffmpeg /usr/lib/ /usr/lib/
 COPY --from=ffmpeg /usr/local/ /usr/local/
 COPY --from=ffmpeg /etc/ /etc/
