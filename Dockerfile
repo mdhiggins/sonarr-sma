@@ -10,7 +10,6 @@ COPY --from=ffmpeg / /
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
-ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 
 RUN \
   # get git

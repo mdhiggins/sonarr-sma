@@ -20,20 +20,7 @@ if [ -f /usr/bin/apt ]; then
         python3-pip \
         python3-venv \
         fonts-dejavu \
-        git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
-    if [[ "${SMA_HWACCEL}" == "true" ]]; then
-        apt-get install --no-install-recommends -y -qq \
-            libva-drm2 \
-            libva2 \
-            i965-va-driver \
-            intel-media-va-driver-non-free \
-            mesa-va-drivers > /dev/null
-    fi
-    if [[ "${SMA_USE_REPO}" == "true" ]]; then
-        apt-get install --no-install-recommends -y -qq \
-            ffmpeg > /dev/null
-    fi
 elif [ -f /sbin/apk ]; then
     # Alpine
     apk update > /dev/null
@@ -42,6 +29,7 @@ elif [ -f /sbin/apk ]; then
         xz \
         python3 \
         py3-pip \
+        fontconfig \
         ttf-dejavu \
         git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
@@ -97,33 +85,8 @@ else
 fi
 
 # ffmpeg
-if [[ $(which ffmpeg) ]]; then
-    :
-elif [[ -n "${SMA_FFMPEG_PATH}" ]] && [[ -n "${SMA_FFPROBE_PATH}" ]]; then
-    :
-else
-    # check ffmpeg URL
-    if [[ -z "${SMA_FFMPEG_URL}" ]]; then
-    architecture=$(arch)
-    case "$architecture" in
-        'x86_64'|'amd64')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
-        ;;
-        'i386'|'i686')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
-        ;;
-        'arm'|'armv7l'|'armv6l')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz"
-        ;;
-        'aarch64_be'|'aarch64'|'armv8b'|'armv8l'|'arm64')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz"
-        ;;
-        *)
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
-        ;;
-    esac
+if [[ -v "${SMA_FFMPEG_URL}" ]]; then
     echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
-    fi
     echo "[90-sma-config] Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
     wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
     tar --exclude='*.html' --exclude='*.txt' -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components ${SMA_STRIP_COMPONENTS}
