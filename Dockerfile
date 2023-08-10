@@ -11,6 +11,12 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 # copy ffmpeg install from linuxserver
 COPY --from=ffmpeg / /
 
+ENV \
+  LIBVA_DRIVERS_PATH="/usr/local/lib/x86_64-linux-gnu/dri" \
+  LD_LIBRARY_PATH="/usr/local/lib" \
+  NVIDIA_DRIVER_CAPABILITIES="compute,video,utility" \
+  NVIDIA_VISIBLE_DEVICES="all"
+
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
@@ -57,7 +63,7 @@ RUN \
   mkdir ${SMA_PATH} && \
   # download repo
   git config --global --add safe.directory ${SMA_PATH} && \
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH}
 
 EXPOSE 8989
 
