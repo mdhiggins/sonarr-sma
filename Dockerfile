@@ -1,43 +1,72 @@
-FROM ghcr.io/linuxserver/sonarr
+ARG ffmpeg_source=ghcr.io/linuxserver/ffmpeg
+ARG ffmpeg_tag=latest
+ARG sonarr_tag=latest
+ARG extra_packages
+
+FROM ${ffmpeg_source}:${ffmpeg_tag} as ffmpeg
+
+FROM ghcr.io/linuxserver/sonarr:${sonarr_tag}
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
+
+# copy ffmpeg install from source
+COPY --from=ffmpeg /usr/lib/ /usr/lib/
+COPY --from=ffmpeg /usr/local/ /usr/local/
+COPY --from=ffmpeg /etc/ /etc/
+COPY --from=ffmpeg /lib/ /lib/
+
+ENV \
+  LIBVA_DRIVERS_PATH="/usr/local/lib/x86_64-linux-gnu/dri" \
+  LD_LIBRARY_PATH="/usr/local/lib" \
+  NVIDIA_DRIVER_CAPABILITIES="compute,video,utility" \
+  NVIDIA_VISIBLE_DEVICES="all"
 
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
-ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 
-# get python3 and git, and install python libraries
 RUN \
-  apt-get update && \
-  apt-get install -y \
-    git \
-    wget \
-    python3 \
-    python3-pip && \
-# make directory
+  # ubuntu
+  if [ -f /usr/bin/apt ]; then \
+    apt-get update && \
+    apt-get install -y \
+      git \
+      wget \
+      xz-utils \
+      python3 \
+      python3-pip \
+      python3-venv \
+      fonts-dejavu \
+      ${extra_packages} && \
+    # cleanup
+    apt-get purge --auto-remove -y && \
+    apt-get clean && \
+    rm -rf \
+      /tmp/* \
+      /var/lib/apt/lists/* \
+      /var/tmp/*; \
+  # alpine
+  elif [ -f /sbin/apk ]; then \
+    apk update && \
+    apk add --no-cache \
+      git \
+      wget \
+      xz \
+      python3 \
+      py3-pip \
+      ttf-dejavu \
+      ${extra_packages} && \
+    apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
+    # cleanup
+    apk del --purge && \
+    rm -rf \
+      /root/.cache \
+      /tmp/*; \
+  fi && \
+  # make directory
   mkdir ${SMA_PATH} && \
-# download repo
+  # download repo
   git config --global --add safe.directory ${SMA_PATH} && \
-  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
-# install pip, venv, and set up a virtual self contained python environment
-  python3 -m pip install --user --upgrade pip && \
-  python3 -m pip install --user virtualenv && \
-  python3 -m virtualenv ${SMA_PATH}/venv && \
-  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
-# ffmpeg (disabled for now)
-#  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
-#  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
-#  chgrp users /usr/local/bin/ffmpeg && \
-#  chgrp users /usr/local/bin/ffprobe && \
-#  chmod g+x /usr/local/bin/ffmpeg && \
-#  chmod g+x /usr/local/bin/ffprobe && \
-# cleanup
-  apt-get purge --auto-remove -y && \
-  apt-get clean && \
-  rm -rf \
-    /tmp/* \
-    /var/lib/apt/lists/* \
-    /var/tmp/*
+  git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH}
 
 EXPOSE 8989
 
