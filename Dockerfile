@@ -35,7 +35,6 @@ RUN \
       python3 \
       python3-pip \
       python3-venv \
-      fonts-dejavu \
       ${extra_packages} && \
     # cleanup
     apt-get purge --auto-remove -y && \
@@ -53,9 +52,7 @@ RUN \
       xz \
       python3 \
       py3-pip \
-      ttf-dejavu \
       ${extra_packages} && \
-    apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community && \
     # cleanup
     apk del --purge && \
     rm -rf \
