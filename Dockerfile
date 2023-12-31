@@ -1,12 +1,22 @@
 FROM ghcr.io/linuxserver/sonarr:develop
 LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 
+# copy ffmpeg install from source
+COPY --from=ffmpeg /usr/lib/ /usr/lib/
+COPY --from=ffmpeg /usr/local/ /usr/local/
+COPY --from=ffmpeg /etc/ /etc/
+COPY --from=ffmpeg /lib/ /lib/
+
+ENV \
+  LIBVA_DRIVERS_PATH="/usr/local/lib/x86_64-linux-gnu/dri" \
+  LD_LIBRARY_PATH="/usr/local/lib" \
+  NVIDIA_DRIVER_CAPABILITIES="compute,video,utility" \
+  NVIDIA_VISIBLE_DEVICES="all"
+
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
-ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
 
-# get python3 and git, and install python libraries
 RUN \
   apk update && \
   apk add --no-cache \
@@ -17,7 +27,7 @@ RUN \
     py3-virtualenv && \
 # make directory
   mkdir ${SMA_PATH} && \
-# download repo
+  # download repo
   git config --global --add safe.directory ${SMA_PATH} && \
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
 # install pip, venv, and set up a virtual self contained python environment
