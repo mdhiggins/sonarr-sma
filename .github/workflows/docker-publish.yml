@@ -19,7 +19,7 @@ jobs:
             dockerfile: Dockerfile
             platform: amd64
           -
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.arm64
             platform: arm64
     steps:
       -
