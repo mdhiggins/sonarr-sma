@@ -43,6 +43,7 @@ elif [ -f /sbin/apk ]; then
         xz \
         python3 \
         py3-pip \
+        py3-virtualenv \
         fontconfig \
         ttf-dejavu \
         git \
