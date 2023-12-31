@@ -5,7 +5,67 @@ if [[ -z "${SMA_PATH}" ]]; then
     export SMA_PATH="/usr/local/sma"
 fi
 
-# check sma installation
+if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
+    export SMA_STRIP_COMPONENTS=1
+fi
+
+if [ -f /usr/bin/apt ]; then
+    ## Ubuntu
+    export DEBIAN_FRONTEND="noninteractive"
+    apt-get -y -qq update > /dev/null
+    apt-get install --no-install-recommends -y -qq \
+        wget \
+        xz-utils \
+        python3 \
+        python3-pip \
+        python3-venv \
+        fontconfig \
+        fonts-dejavu \
+        git \
+        ${SMA_EXTRA_PACKAGES} > /dev/null
+    if [[ "${SMA_HWACCEL}" == "true" ]]; then
+        apt-get install --no-install-recommends -y -qq \
+            libva-drm2 \
+            libva2 \
+            i965-va-driver \
+            intel-media-va-driver-non-free \
+            mesa-va-drivers > /dev/null
+    fi
+    if [[ "${SMA_USE_REPO}" == "true" ]]; then
+        apt-get install --no-install-recommends -y -qq \
+            ffmpeg > /dev/null
+    fi
+elif [ -f /sbin/apk ]; then
+    # Alpine
+    apk update > /dev/null
+    apk add --no-cache \
+        wget \
+        xz \
+        python3 \
+        py3-pip \
+        py3-virutalenv \
+        fontconfig \
+        ttf-dejavu \
+        git \
+        ${SMA_EXTRA_PACKAGES} > /dev/null
+    apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community > /dev/null
+    if [[ "${SMA_HWACCEL}" == "true" ]]; then
+        apk add --no-cache \
+            libva \
+            libgomp \
+            vidstab \
+            ca-certificates \
+            libva-intel-driver \
+            intel-media-driver \
+            mesa-va-gallium \
+            mesa-dri-gallium > /dev/null
+    fi
+    if [[ "${SMA_USE_REPO}" == "true" ]]; then
+        apk add --no-cache \
+            ffmpeg > /dev/null
+    fi
+fi
+
 if [[ -f "${SMA_PATH}/manual.py" ]]; then
     # update from git
     if [[ "${SMA_UPDATE}" == "true" ]]
@@ -40,12 +100,33 @@ else
 fi
 
 # ffmpeg
-if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
-    export SMA_STRIP_COMPONENTS=1
-fi
-
-if [[ -v "${SMA_FFMPEG_URL}" ]]; then
+if [[ $(which ffmpeg) ]]; then
+    :
+elif [[ -n "${SMA_FFMPEG_PATH}" ]] && [[ -n "${SMA_FFPROBE_PATH}" ]]; then
+    :
+else
+    # check ffmpeg URL
+    if [[ -z "${SMA_FFMPEG_URL}" ]]; then
+    architecture=$(arch)
+    case "$architecture" in
+        'x86_64'|'amd64')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+        ;;
+        'i386'|'i686')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
+        ;;
+        'arm'|'armv7l'|'armv6l')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz"
+        ;;
+        'aarch64_be'|'aarch64'|'armv8b'|'armv8l'|'arm64')
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz"
+        ;;
+        *)
+        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
+        ;;
+    esac
     echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
+    fi
     echo "[90-sma-config] Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
     wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
     tar --exclude='*.html' --exclude='*.txt' -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components ${SMA_STRIP_COMPONENTS}
