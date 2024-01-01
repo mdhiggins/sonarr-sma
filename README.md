@@ -59,7 +59,7 @@ The script installs all dependencies in a virtual environment, not the container
 |Parameter|Value|
 |---|---|
 |On Grab| No|
-|On Download| Yes|
+|On Import| Yes|
 |On Upgrade| Yes|
 |On Rename| No|
 |Path|`/usr/local/sma/postSonarr.sh`|

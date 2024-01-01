@@ -20,6 +20,7 @@ ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
 ENV SMA_HWACCEL true
 
+# get python3 and git, and install python libraries
 RUN \
   if [ -f /usr/bin/apt ]; then \
     apt-get update && \
@@ -28,6 +29,7 @@ RUN \
       wget \
       python3 \
       python3-pip \
+      python3-venv \
       ${extra_packages} && \
 # cleanup
     apt-get purge --auto-remove -y && \
@@ -43,6 +45,7 @@ RUN \
       wget \
       python3 \
       py3-pip \
+      py3-virtualenv \
       ${extra_packages} && \
 # cleanup
     apk del --purge && \
@@ -56,8 +59,6 @@ RUN \
   git config --global --add safe.directory ${SMA_PATH} && \
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
 # install pip, venv, and set up a virtual self contained python environment
-  python3 -m pip install --user --upgrade pip && \
-  python3 -m pip install --user virtualenv && \
   python3 -m virtualenv ${SMA_PATH}/venv && \
   ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
 # ffmpeg
