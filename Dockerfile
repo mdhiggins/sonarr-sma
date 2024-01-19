@@ -29,7 +29,7 @@ RUN \
       wget \
       python3 \
       python3-pip \
-      python3-venv \
+      python3-virutalenv \
       ${extra_packages} && \
 # cleanup
     apt-get purge --auto-remove -y && \
