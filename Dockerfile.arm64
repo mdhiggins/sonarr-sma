@@ -4,6 +4,8 @@ LABEL maintainer="mdhiggins <mdhiggins23@gmail.com>"
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
+ENV SMA_FFMPEG_PATH ffmpeg
+ENV SMA_FFPROBE_PATH ffprobe
 ENV SMA_FFMPEG_URL https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz
 
 # get python3 and git, and install python libraries
@@ -23,13 +25,6 @@ RUN \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m virtualenv ${SMA_PATH}/venv && \
   ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
-# ffmpeg (disabled for now)
-#  wget ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz && \
-#  tar -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components 1 && \
-#  chgrp users /usr/local/bin/ffmpeg && \
-#  chgrp users /usr/local/bin/ffprobe && \
-#  chmod g+x /usr/local/bin/ffmpeg && \
-#  chmod g+x /usr/local/bin/ffprobe && \
 # cleanup
   apk del --purge && \
   rm -rf \
