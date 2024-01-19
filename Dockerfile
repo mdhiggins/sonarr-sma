@@ -18,6 +18,8 @@ COPY --from=ffmpeg /build /
 ENV SMA_PATH /usr/local/sma
 ENV SMA_RS Sonarr
 ENV SMA_UPDATE false
+ENV SMA_FFMPEG_PATH ffmpeg
+ENV SMA_FFPROBE_PATH ffprobe
 ENV SMA_HWACCEL true
 
 # get python3 and git, and install python libraries
@@ -60,12 +62,7 @@ RUN \
   git clone https://github.com/mdhiggins/sickbeard_mp4_automator.git ${SMA_PATH} && \
 # install pip, venv, and set up a virtual self contained python environment
   python3 -m virtualenv ${SMA_PATH}/venv && \
-  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt && \
-# ffmpeg
-  chgrp users /usr/local/bin/ffmpeg && \
-  chgrp users /usr/local/bin/ffprobe && \
-  chmod g+x /usr/local/bin/ffmpeg && \
-  chmod g+x /usr/local/bin/ffprobe
+  ${SMA_PATH}/venv/bin/pip install -r ${SMA_PATH}/setup/requirements.txt
 
 EXPOSE 8989
 
