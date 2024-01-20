@@ -49,7 +49,6 @@ elif [ -f /sbin/apk ]; then
         ttf-dejavu \
         git \
         ${SMA_EXTRA_PACKAGES} > /dev/null
-    apk add --no-cache py3-pymediainfo --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community > /dev/null
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apk add --no-cache \
             libva \
