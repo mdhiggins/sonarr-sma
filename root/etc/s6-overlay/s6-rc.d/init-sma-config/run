@@ -101,30 +101,30 @@ else
 fi
 
 # ffmpeg
-if [[ -f "${SMA_FFMPEG_PATH}" ]] && [[ -f "${SMA_FFPROBE_PATH}" ]]; then
-    :
+if [[ -f "$(which ${SMA_FFMPEG_PATH})" ]] && [[ -f "$(which ${SMA_FFPROBE_PATH})" ]]; then
+    echo "[90-sma-config] FFMPEG installation found $(which ${SMA_FFMPEG_PATH})"
 else
     # check ffmpeg URL
     if [[ -z "${SMA_FFMPEG_URL}" ]]; then
-    architecture=$(arch)
-    case "$architecture" in
-        'x86_64'|'amd64')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
-        ;;
-        'i386'|'i686')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
-        ;;
-        'arm'|'armv7l'|'armv6l')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz"
-        ;;
-        'aarch64_be'|'aarch64'|'armv8b'|'armv8l'|'arm64')
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz"
-        ;;
-        *)
-        export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
-        ;;
-    esac
-    echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
+        architecture=$(arch)
+        case "$architecture" in
+            'x86_64'|'amd64')
+            export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz"
+            ;;
+            'i386'|'i686')
+            export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-i686-static.tar.xz"
+            ;;
+            'arm'|'armv7l'|'armv6l')
+            export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-armhf-static.tar.xz"
+            ;;
+            'aarch64_be'|'aarch64'|'armv8b'|'armv8l'|'arm64')
+            export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-arm64-static.tar.xz"
+            ;;
+            *)
+            export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
+            ;;
+        esac
+        echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
     fi
     echo "[90-sma-config] Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
     wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
