@@ -32,6 +32,22 @@ if [ -f /usr/bin/apt ]; then
             intel-media-va-driver-non-free \
             mesa-va-drivers > /dev/null
     fi
+    if [[ "${SMA_NVIDIA}" == "true" ]]; then
+        export NVIDIA_DRIVER_CAPABILITIES="compute,graphics,utility,video"
+        export NVIDIA_VISIBLE_DEVICES="all"
+        if [[ -z "${LD_LIBRARY_PATH}" ]]; then
+            export LD_LIBRARY_PATH="/usr/local/cuda-11.4/lib64"
+        fi
+        if [[ -z "${SMA_LIBSSL}" ]]; then
+            export SMA_LIBSSL="http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb"
+        fi
+    fi
+    if [[ -n "${SMA_LIBSSL}"]]; then
+        filename=$(basename "${SMA_LIBSSL}")
+        wget -P /tmp "${SMA_LIBSSL}"
+        dpkg -i "/tmp/${filename}"
+        rm "/tmp/${filename}"
+    fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
             ffmpeg > /dev/null
