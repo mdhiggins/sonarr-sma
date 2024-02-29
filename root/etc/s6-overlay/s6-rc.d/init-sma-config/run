@@ -1,6 +1,7 @@
 #!/usr/bin/with-contenv bash
 
-echo "[90-sma-config] SMA config initialized"
+echoprefix = "[90-sma-config]"
+echo "${echoprefix} SMA config initialized"
 # env check
 if [[ -z "${SMA_PATH}" ]]; then
     export SMA_PATH="/usr/local/sma"
@@ -43,10 +44,13 @@ if [ -f /usr/bin/apt ]; then
         fi
     fi
     if [[ -n "${SMA_LIBSSL}"]]; then
-        filename=$(basename "${SMA_LIBSSL}")
-        wget -P /tmp "${SMA_LIBSSL}"
-        dpkg -i "/tmp/${filename}"
-        rm "/tmp/${filename}"
+        package_filename=$(basename "${SMA_LIBSSL}")
+        if ! dpkg -l | grep -q "^ii\s*${package_filename%%_*}"; then
+            echo "${echoprefix} Installing libssl from ${SMA_LIBSSL}"
+            wget -P /tmp "${SMA_LIBSSL}"
+            dpkg -i "/tmp/${package_filename}"
+            rm "/tmp/${package_filename}"
+        fi
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
         apt-get install --no-install-recommends -y -qq \
@@ -86,12 +90,12 @@ if [[ -f "${SMA_PATH}/manual.py" ]]; then
     # update from git
     if [[ "${SMA_UPDATE}" == "true" ]]
     then
-        echo "[90-sma-config] Updating SMA from github master"
+        echo "${echoprefix} Updating SMA from github master"
         git -C ${SMA_PATH} pull origin master --quiet
     fi
 else
     # initial download
-    echo "[90-sma-config] Init SMA from github master"
+    echo "${echoprefix} Init SMA from github master"
     git config --global --add safe.directory ${SMA_PATH}
     git -C ${SMA_PATH} init --quiet
     git -C ${SMA_PATH} remote add origin https://github.com/mdhiggins/sickbeard_mp4_automator.git
@@ -102,13 +106,13 @@ fi
 if [[ -f "${SMA_PATH}/venv/bin/python3" ]]; then
     :
 else
-    echo "[90-sma-config] Creating python virtual environment and installing requirements"
+    echo "${echoprefix} Creating python virtual environment and installing requirements"
     python3 -m venv ${SMA_PATH}/venv
     ${SMA_PATH}/venv/bin/python3 -m pip install -q --upgrade pip --no-cache-dir > /dev/null
     ${SMA_PATH}/venv/bin/pip install -q --no-cache-dir \
         -r ${SMA_PATH}/setup/requirements.txt > /dev/null
     if [[ -z "${SMA_RS}" ]]; then
-    echo "[90-sma-config] Installing additional deluge/qbittorrent requirements"
+    echo "${echoprefix} Installing additional deluge/qbittorrent requirements"
     ${SMA_PATH}/venv/bin/pip install -q --no-cache-dir \
         -r ${SMA_PATH}/setup/requirements-deluge.txt \
         -r ${SMA_PATH}/setup/requirements-qbittorrent.txt > /dev/null
@@ -117,7 +121,7 @@ fi
 
 # ffmpeg
 if [[ -f "$(which ${SMA_FFMPEG_PATH})" ]] && [[ -f "$(which ${SMA_FFPROBE_PATH})" ]]; then
-    echo "[90-sma-config] FFMPEG installation found $(which ${SMA_FFMPEG_PATH})"
+    echo "${echoprefix} FFMPEG installation found $(which ${SMA_FFMPEG_PATH})"
 else
     # check ffmpeg URL
     if [[ -z "${SMA_FFMPEG_URL}" ]]; then
@@ -139,9 +143,9 @@ else
             export SMA_FFMPEG_URL="https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$architecture-static.tar.xz"
             ;;
         esac
-        echo "[90-sma-config] Set FFMPEG URL to ${SMA_FFMPEG_URL}"
+        echo "${echoprefix} Set FFMPEG URL to ${SMA_FFMPEG_URL}"
     fi
-    echo "[90-sma-config] Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
+    echo "${echoprefix} Downloading and installing FFMpeg from ${SMA_FFMPEG_URL}"
     wget -q ${SMA_FFMPEG_URL} -O /tmp/ffmpeg.tar.xz
     if [[ "${SMA_FFMPEG_PATH}" == "ffmpeg" ]] && [[ "${SMA_FFPROBE_PATH}" == "ffprobe" ]] ; then
         tar --exclude='*.html' --exclude='*.txt' -xJf /tmp/ffmpeg.tar.xz -C /usr/local/bin --strip-components ${SMA_STRIP_COMPONENTS}
