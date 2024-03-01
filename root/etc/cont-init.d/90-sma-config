@@ -1,6 +1,6 @@
 #!/usr/bin/with-contenv bash
 
-echoprefix = "[90-sma-config]"
+echoprefix="[90-sma-config]"
 echo "${echoprefix} SMA config initialized"
 # env check
 if [[ -z "${SMA_PATH}" ]]; then
