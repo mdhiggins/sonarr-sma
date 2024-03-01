@@ -11,7 +11,7 @@ if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
     export SMA_STRIP_COMPONENTS=1
 fi
 
-if [ -f /usr/bin/apt ]; then
+if [[ -f /usr/bin/apt ]]; then
     ## Ubuntu
     export DEBIAN_FRONTEND="noninteractive"
     apt-get -y -qq update > /dev/null
@@ -43,7 +43,7 @@ if [ -f /usr/bin/apt ]; then
             export SMA_LIBSSL="http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.0g-2ubuntu4_amd64.deb"
         fi
     fi
-    if [[ -n "${SMA_LIBSSL}"]]; then
+    if [[ -n "${SMA_LIBSSL}" ]]; then
         package_filename=$(basename "${SMA_LIBSSL}")
         if ! dpkg -l | grep -q "^ii\s*${package_filename%%_*}"; then
             echo "${echoprefix} Installing libssl from ${SMA_LIBSSL}"
@@ -56,7 +56,7 @@ if [ -f /usr/bin/apt ]; then
         apt-get install --no-install-recommends -y -qq \
             ffmpeg > /dev/null
     fi
-elif [ -f /sbin/apk ]; then
+elif [[ -f /sbin/apk ]]; then
     # Alpine
     apk update > /dev/null
     apk add --no-cache \
