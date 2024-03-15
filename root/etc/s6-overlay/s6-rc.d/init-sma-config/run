@@ -11,6 +11,14 @@ if [[ -z "${SMA_STRIP_COMPONENTS}" ]]; then
     export SMA_STRIP_COMPONENTS=1
 fi
 
+if [[ -z "${SMA_FFMPEG_PATH}" ]]; then
+    export SMA_FFMPEG_PATH="ffmpeg"
+fi
+
+if [[ -z "${SMA_FFPROBE_PATH}" ]]; then
+    export SMA_FFPROBE_PATH="ffprobe"
+fi
+
 if [[ -f /usr/bin/apt ]]; then
     ## Ubuntu
     export DEBIAN_FRONTEND="noninteractive"
