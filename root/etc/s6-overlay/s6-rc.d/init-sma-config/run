@@ -116,7 +116,7 @@ if [[ -f "${SMA_PATH}/venv/bin/python3" ]]; then
 else
     echo "${echoprefix} Creating python virtual environment and installing requirements"
     python3 -m venv ${SMA_PATH}/venv
-    ${SMA_PATH}/venv/bin/python3 -m pip install -q --upgrade pip==24.0 --no-cache-dir --force-reinstall > /dev/null
+    ${SMA_PATH}/venv/bin/python3 -m pip install -q --upgrade pip --no-cache-dir > /dev/null
     ${SMA_PATH}/venv/bin/pip install -q --no-cache-dir \
         -r ${SMA_PATH}/setup/requirements.txt > /dev/null
     if [[ -z "${SMA_RS}" ]]; then
