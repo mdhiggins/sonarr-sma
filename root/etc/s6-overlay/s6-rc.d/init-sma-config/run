@@ -185,6 +185,10 @@ chown -R abc:abc ${SMA_PATH}
 chmod -R 775 ${SMA_PATH}/*.sh
 
 # update autoprocess
-${SMA_PATH}/venv/bin/python3 ${SMA_PATH}/update.py
+if [ -w "$SMA_PATH/config/autoProcess.ini" ]; then
+  ${SMA_PATH}/venv/bin/python3 ${SMA_PATH}/update.py
+else
+  echo "${echoprefix} autoProcess.ini does not have write permission, it will need to be configured manually"
+fi
 
 exit $?
