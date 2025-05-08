@@ -80,6 +80,7 @@ elif [[ -f /sbin/apk ]]; then
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apk add --no-cache \
             libva \
+            libva-utils \
             libgomp \
             vidstab \
             ca-certificates \
