@@ -80,6 +80,7 @@ elif [[ -f /sbin/apk ]]; then
     if [[ "${SMA_HWACCEL}" == "true" ]]; then
         apk add --no-cache \
             libva \
+            libva-utils \
             libgomp \
             vidstab \
             ca-certificates \
@@ -87,6 +88,12 @@ elif [[ -f /sbin/apk ]]; then
             intel-media-driver \
             mesa-va-gallium \
             mesa-dri-gallium > /dev/null
+        gen=$(grep -m1 "model name" /proc/cpuinfo | grep -oE '[0-9]{1,2}(st|nd|rd|th) Gen Intel' | grep -oE '^[0-9]+')
+        if [[ -n "$gen" && "$gen" -gt 11 ]]; then
+            apk add --no-cache \
+                --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/ \
+                onevpl-intel-gpu > /dev/null
+        fi
     fi
     if [[ "${SMA_USE_REPO}" == "true" ]]; then
         apk add --no-cache \
@@ -185,6 +192,10 @@ chown -R abc:abc ${SMA_PATH}
 chmod -R 775 ${SMA_PATH}/*.sh
 
 # update autoprocess
-${SMA_PATH}/venv/bin/python3 ${SMA_PATH}/update.py
+if [ -w "$SMA_PATH/config/autoProcess.ini" ]; then
+  ${SMA_PATH}/venv/bin/python3 ${SMA_PATH}/update.py
+else
+  echo "${echoprefix} autoProcess.ini does not have write permission, it will need to be configured manually"
+fi
 
 exit $?
