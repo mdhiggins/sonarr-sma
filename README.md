@@ -74,8 +74,10 @@ Located at `/usr/local/sma/config/sma.log` inside the container and your mounted
 |HOST|Local IP address for callback requests, default `127.0.0.1`|
 |SMA_PATH|`/usr/local/sma`|
 |SMA_UPDATE|Default `false`. Set `true` to pull git update of SMA on restart|
-|SMA_FFMPEG_URL|If provided, override linuxserver/ffmpeg with a static build provided by the URL|
+|SMA_FFMPEG_URL|Defaults to latest static build from https://johnvansickle.com but can override by changing this var|
 |SMA_STRIP_COMPONENTS|Default `1`. Number of components to strip from your tar.xz file when extracting so that FFmpeg binaries land in `/usr/local/bin`|
+|SMA_HWACCEL|Default `false`. Set `true` to pull additional packages used for hardare acceleration (will require custom FFmpeg binaries)|
+|SMA_USE_REPO|Default `false`. Set `true` to download FFMPEG binaries for default repository (will likely be older versions)|
 
 ## Hardware Acceleration
 The default image is built with [linuxserver/ffmpeg](https://hub.docker.com/r/linuxserver/ffmpeg), which supports VAAPI, QSV, and NVEnc/NVDec.
